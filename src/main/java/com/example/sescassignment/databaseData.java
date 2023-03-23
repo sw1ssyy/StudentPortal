@@ -1,9 +1,6 @@
 package com.example.sescassignment;
 
-import com.example.sescassignment.Model.Course;
-import com.example.sescassignment.Model.CourseRepo;
-import com.example.sescassignment.Model.Student;
-import com.example.sescassignment.Model.StudentRepo;
+import com.example.sescassignment.Model.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +12,7 @@ import java.util.Set;
 @Configuration
 public class databaseData {
     @Bean
-    CommandLineRunner initDatabase(CourseRepo courseRepo, StudentRepo studentRepo) {
+    CommandLineRunner initDatabase(CourseRepo courseRepo, StudentRepo studentRepo, AccountRepo accountRepo) {
         return args -> {
             Course SESC = new Course();
             SESC.setTitle("SESC");
@@ -56,6 +53,17 @@ public class databaseData {
 
             studentRepo.saveAllAndFlush(Set.of(John, Alex, Rachel));
 
+            Account mister = new Account();
+            mister.setUsername("Mister");
+            mister.setPassword("test");
+            mister.setStudentID("c3538468");
+
+            Account richards = new Account();
+            richards.setUsername("richards");
+            richards.setPassword("test2");
+            richards.setStudentID("c3231361");
+
+            accountRepo.saveAllAndFlush(Set.of(mister,richards));
         };
     }
 

@@ -20,4 +20,6 @@ public class intergrationService {
     public Invoice createCourseFeeInvoice(Invoice invoice){
         return template.postForObject("http:/localhost:8081/invoices/", invoice , Invoice.class);
     }
+
+
 }
