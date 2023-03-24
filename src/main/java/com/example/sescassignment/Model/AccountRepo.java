@@ -8,5 +8,6 @@ import java.util.List;
 public interface AccountRepo extends JpaRepository<Account, Long> {
 
     Boolean existsAccountByUsernameAndPassword(String username, String password);
-
+    Account findAccountByUsername(String username);
+    Account findAccountById(long id);
 }

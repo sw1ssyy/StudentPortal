@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<div th:insert="~{fragments/navbar :: header}"></div>
 <h2 class="text-center p-2 m-3" >Course List</h2>
 <div class="container">
 <table class="table table-striped">
@@ -16,12 +17,14 @@
         <th>Course Title</th>
         <th>Course Description</th>
         <th>Course Fee</th>
+        <th>Action</th>
     </tr>
 <tr th:each="course : ${courseList}">
     <td th:text="${course.id}"></td>
     <td th:text="${course.title}"></td>
     <td th:text="${course.description}"></td>
     <td th:text="${course.fee}"></td>
+    <td><button class="btn bg-primary" type="button" >Enroll</button></td>
 </tr>
 </table>
 </div>

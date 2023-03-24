@@ -2,7 +2,9 @@ package com.example.sescassignment.Service;
 
 import com.example.sescassignment.Model.Account;
 import com.example.sescassignment.Model.AccountRepo;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 import java.util.Random;
 
@@ -26,7 +28,22 @@ public class accountService {
         return restTemplate.postForObject("localhost:8081/accounts/",studentID, Account.class);
     }
 
+    public Account findAccountByUsername(String user){
+        return repo.findAccountByUsername(user);
+    }
 
+    public ResponseEntity<Account> updateAccount(@PathVariable long id, Account account) {
+        Account updatedAccount = repo.findAccountById(id);
+        if (updatedAccount == null){
+            throw new RuntimeException("Account: '" + account.getUsername() + "' Does not Exist ");
+
+        }
+        updatedAccount.setUsername(account.getUsername());
+        updatedAccount.setPassword(account.getPassword());
+        updatedAccount.setStudentID(account.getStudentID());
+        repo.save(updatedAccount);
+        return ResponseEntity.ok(updatedAccount);
+    }
     private String createNewStudentID() {
         Random r = new Random();
         String studentID = "c";
@@ -37,5 +54,7 @@ public class accountService {
         }
         return studentID;
     }
+
+
 }
 
