@@ -2,7 +2,6 @@ package com.example.sescassignment.Controller;
 
 import com.example.sescassignment.Model.Account;
 import com.example.sescassignment.Service.accountService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +23,12 @@ public class accountController {
     @PostMapping(value = "/login")
     public String checkLogin(Account account ,Model model) {
         if(service.checkAccountExists(account.getUsername(), account.getPassword())){
-            System.out.println("Account: '" + account.getUsername() + "' Exists!");
+            System.out.println("Account: '" + account.getUsername() + "' Login Success!");
             currentUser = account.getUsername();
             return getHomePage(model);
         }
         else
-            System.out.println("Account: '" + account.getUsername() + "' Doesn't Exist!");
+            System.out.println("Account: '" + account.getUsername() + "' Login Failed!");
         return "login-failed";
     }
     @GetMapping(value = "/signup")
@@ -47,6 +46,7 @@ public class accountController {
         }
         //If account does not exist
             service.createNewAccount(account);
+            service.createFinanceAccount(account.getStudentID());
             model.addAttribute("account", account);
             return "signup-success";
     }
@@ -62,9 +62,11 @@ public class accountController {
         model.addAttribute("user", savedAccount);
         return "edit-profile";
     }
-    @PutMapping(value = "home/edit/{id}")
-    public ResponseEntity<Account> putEditProfile( @PathVariable Long id, @RequestBody Account account){
-        return service.updateAccount(id, account);
+    @PostMapping(value = "home/edit/{id}")
+    public String putEditProfile(Model model, @PathVariable Long id,  Account account ){
+         service.updateAccount(id, account);
+        currentUser = account.getUsername();
+         return getHomePage(model);
     }
 
 }

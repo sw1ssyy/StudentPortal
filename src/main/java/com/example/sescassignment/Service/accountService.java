@@ -5,6 +5,7 @@ import com.example.sescassignment.Model.AccountRepo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 import java.util.Random;
 
@@ -20,19 +21,19 @@ public class accountService {
     public Boolean checkAccountExists(String username, String password){
         return repo.existsAccountByUsernameAndPassword(username,password);
     }
-    public Account createNewAccount(Account account) {
+    public void createNewAccount(Account account) {
         account.setStudentID(createNewStudentID());
-        return repo.save(account);
+         repo.save(account);
     }
-    public Account createFinanceAccount(String studentID){
-        return restTemplate.postForObject("localhost:8081/accounts/",studentID, Account.class);
+    public Account  createFinanceAccount(String studentId){
+         return restTemplate.postForObject("localhost:8081/accounts/",studentId, Account.class);
     }
 
     public Account findAccountByUsername(String user){
         return repo.findAccountByUsername(user);
     }
 
-    public ResponseEntity<Account> updateAccount(@PathVariable long id, Account account) {
+    public ResponseEntity<Account> updateAccountJSON(@PathVariable long id, Account account) {
         Account updatedAccount = repo.findAccountById(id);
         if (updatedAccount == null){
             throw new RuntimeException("Account: '" + account.getUsername() + "' Does not Exist ");
@@ -44,6 +45,18 @@ public class accountService {
         repo.save(updatedAccount);
         return ResponseEntity.ok(updatedAccount);
     }
+
+
+    public void updateAccount(@PathVariable Long id, @RequestBody Account account){
+        Account updatedAccount = repo.findAccountById(id);
+        if(updatedAccount == null){
+            throw new RuntimeException("Account: '" + account.getUsername() + "' Does not Exist");
+        }
+        updatedAccount.setUsername(account.getUsername());
+        updatedAccount.setPassword(account.getPassword());
+         repo.save(updatedAccount);
+    }
+
     private String createNewStudentID() {
         Random r = new Random();
         String studentID = "c";

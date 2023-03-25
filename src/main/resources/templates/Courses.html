@@ -10,7 +10,14 @@
 <body>
 <div th:insert="~{fragments/navbar :: header}"></div>
 <h2 class="text-center p-2 m-3" >Course List</h2>
+
 <div class="container">
+    <form th:action="@{/courses}">
+    <label>
+        <input class="align-items-center" type="text" placeholder="Course Search" name="keyword" th:value="${keyword}">
+        <button type="submit" class="btn btn-primary btn-sm mb-1">Search</button>
+    </label>
+    </form>
 <table class="table table-striped">
     <tr>
         <th>Course ID</th>
@@ -24,7 +31,7 @@
     <td th:text="${course.title}"></td>
     <td th:text="${course.description}"></td>
     <td th:text="${course.fee}"></td>
-    <td><button class="btn bg-primary" type="button" >Enroll</button></td>
+    <td><button type="button" class="btn btn-primary btn-sm">Enroll</button></td>
 </tr>
 </table>
 </div>

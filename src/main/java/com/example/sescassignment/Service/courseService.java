@@ -16,4 +16,11 @@ public class courseService {
     public List<Course> getAllCourses(){
         return repo.findAll();
     }
+
+    public List<Course> SearchCoursebyName(String title){
+        if(title == null || title.equals("")){
+            return repo.findAll();
+        }
+        return repo.findCourseByTitle(title);
+    }
 }

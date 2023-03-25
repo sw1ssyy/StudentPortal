@@ -1,6 +1,7 @@
 package com.example.sescassignment.Controller;
 import com.example.sescassignment.Model.Course;
 import com.example.sescassignment.Service.courseService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +17,10 @@ public class courseController {
     }
 
     @GetMapping(value = "/courses")
-    public String viewCourses(Model model){
-        List<Course> courseList = service.getAllCourses();
+    public String viewCourses(Model model,@Param("keyword")String keyword){
+        List<Course> courseList = service.SearchCoursebyName(keyword);
         model.addAttribute("courseList", courseList);
+        model.addAttribute("keyword", keyword);
         return "Courses";
     }
 }
