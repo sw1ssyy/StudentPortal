@@ -1,8 +1,6 @@
 package com.example.sescassignment.Service;
 
 import com.example.sescassignment.Model.Course;
-import com.example.sescassignment.Model.Student;
-import com.example.sescassignment.Model.StudentRepo;
 
 public class enrollmentService {
     private final StudentRepo repo;

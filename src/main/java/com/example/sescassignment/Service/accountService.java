@@ -25,25 +25,12 @@ public class accountService {
         account.setStudentID(createNewStudentID());
          repo.save(account);
     }
-    public Account  createFinanceAccount(String studentId){
-         return restTemplate.postForObject("localhost:8081/accounts/",studentId, Account.class);
+    public void createFinanceAccount(String studentId){
+        restTemplate.postForObject("localhost:8081/accounts/" ,studentId, Account.class);
     }
 
     public Account findAccountByUsername(String user){
         return repo.findAccountByUsername(user);
-    }
-
-    public ResponseEntity<Account> updateAccountJSON(@PathVariable long id, Account account) {
-        Account updatedAccount = repo.findAccountById(id);
-        if (updatedAccount == null){
-            throw new RuntimeException("Account: '" + account.getUsername() + "' Does not Exist ");
-
-        }
-        updatedAccount.setUsername(account.getUsername());
-        updatedAccount.setPassword(account.getPassword());
-        updatedAccount.setStudentID(account.getStudentID());
-        repo.save(updatedAccount);
-        return ResponseEntity.ok(updatedAccount);
     }
 
 
@@ -55,6 +42,18 @@ public class accountService {
         updatedAccount.setUsername(account.getUsername());
         updatedAccount.setPassword(account.getPassword());
          repo.save(updatedAccount);
+    }
+    public ResponseEntity<Account> updateAccountJSON(@PathVariable long id, Account account) {
+        Account updatedAccount = repo.findAccountById(id);
+        if (updatedAccount == null){
+            throw new RuntimeException("Account: '" + account.getUsername() + "' Does not Exist ");
+
+        }
+        updatedAccount.setUsername(account.getUsername());
+        updatedAccount.setPassword(account.getPassword());
+        updatedAccount.setStudentID(account.getStudentID());
+        repo.save(updatedAccount);
+        return ResponseEntity.ok(updatedAccount);
     }
 
     private String createNewStudentID() {

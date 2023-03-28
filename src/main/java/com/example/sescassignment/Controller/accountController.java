@@ -42,7 +42,6 @@ public class accountController {
         if(service.checkAccountExists(account.getUsername(), account.getPassword())){
             System.out.println("Error: Account Already Exists");
             return "signup-failed";
-
         }
         //If account does not exist
             service.createNewAccount(account);

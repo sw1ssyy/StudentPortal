@@ -1,7 +1,9 @@
 package com.example.sescassignment.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.Set;
 
@@ -16,5 +18,7 @@ public class Course {
     private Double fee;
 
     @ManyToMany(mappedBy = "coursesEnrolledIn")
-    Set<Student> studentsEnrolledInCourses;
+    @JsonIgnore
+    @ToString.Exclude
+    Set<Account> studentsEnrolledInCourses;
 }
