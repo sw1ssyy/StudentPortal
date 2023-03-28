@@ -18,12 +18,17 @@ public class Account {
     private Long id;
     @Column(unique = true)
     private String studentID;
+    private Boolean hasOutstandingBalance;
     private String username;
     private String password;
+
+
+
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "course_Student",
-            joinColumns = @JoinColumn(name = "student_id"),
+            name = "course_account",
+            joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

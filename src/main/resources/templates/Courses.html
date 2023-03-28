@@ -26,12 +26,12 @@
         <th>Course Fee</th>
         <th>Action</th>
     </tr>
-<tr th:each="course : ${courseList}">
+<tr  th:each="course : ${courseList}">
     <td th:text="${course.id}"></td>
     <td th:text="${course.title}"></td>
     <td th:text="${course.description}"></td>
     <td th:text="${course.fee}"></td>
-    <td><button type="button" class="btn btn-primary btn-sm">Enroll</button></td>
+    <td><button type="submit" class="btn btn-primary btn-sm" th:onclick="do ">Enroll</button></td>
 </tr>
 </table>
 </div>

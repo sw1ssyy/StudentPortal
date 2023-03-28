@@ -23,11 +23,10 @@ public class accountService {
     }
     public void createNewAccount(Account account) {
         account.setStudentID(createNewStudentID());
+        account.setHasOutstandingBalance(false);
          repo.save(account);
     }
-    public void createFinanceAccount(String studentId){
-        restTemplate.postForObject("localhost:8081/accounts/" ,studentId, Account.class);
-    }
+
 
     public Account findAccountByUsername(String user){
         return repo.findAccountByUsername(user);
@@ -51,7 +50,6 @@ public class accountService {
         }
         updatedAccount.setUsername(account.getUsername());
         updatedAccount.setPassword(account.getPassword());
-        updatedAccount.setStudentID(account.getStudentID());
         repo.save(updatedAccount);
         return ResponseEntity.ok(updatedAccount);
     }

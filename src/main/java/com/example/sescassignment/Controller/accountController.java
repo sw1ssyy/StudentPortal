@@ -1,7 +1,7 @@
 package com.example.sescassignment.Controller;
-
 import com.example.sescassignment.Model.Account;
 import com.example.sescassignment.Service.accountService;
+import com.example.sescassignment.Service.intergrationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class accountController {
     private final accountService service;
+    private final intergrationService service2;
+
     private String currentUser = "";
-    public accountController(accountService service) {
+    public accountController(accountService service, intergrationService service2) {
         this.service = service;
 
+
+        this.service2 = service2;
     }
     @GetMapping(value = "/login")
     public String accountLogin(Model model){
@@ -45,7 +49,7 @@ public class accountController {
         }
         //If account does not exist
             service.createNewAccount(account);
-            service.createFinanceAccount(account.getStudentID());
+            service2.createFinanceAccount(account);
             model.addAttribute("account", account);
             return "signup-success";
     }
@@ -66,6 +70,11 @@ public class accountController {
          service.updateAccount(id, account);
         currentUser = account.getUsername();
          return getHomePage(model);
+    }
+
+    @GetMapping(value = "/enrollment")
+    public String getEnrollmentPage(){
+        return "enrollment";
     }
 
 }

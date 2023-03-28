@@ -21,5 +21,9 @@ public class intergrationService {
         return template.postForObject("http:/localhost:8081/invoices/", invoice , Invoice.class);
     }
 
+    public void createFinanceAccount(Account account){
+        template.postForObject("http://localhost:8081/accounts/", account.getStudentID(), Account.class);
+    }
+
 
 }
