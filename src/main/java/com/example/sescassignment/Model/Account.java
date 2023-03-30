@@ -17,7 +17,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
-    private String studentID;
+    private String studentId;
     private Boolean hasOutstandingBalance;
     private String username;
     private String password;

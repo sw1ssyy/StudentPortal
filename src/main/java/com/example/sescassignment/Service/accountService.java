@@ -2,11 +2,16 @@ package com.example.sescassignment.Service;
 
 import com.example.sescassignment.Model.Account;
 import com.example.sescassignment.Model.AccountRepo;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @Component
@@ -22,18 +27,27 @@ public class accountService {
         return repo.existsAccountByUsernameAndPassword(username,password);
     }
     public void createNewAccount(Account account) {
-        account.setStudentID(createNewStudentID());
+        account.setStudentId(createNewStudentID());
         account.setHasOutstandingBalance(false);
          repo.save(account);
     }
+    public void createFinanceAccount(Account account){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        Map<String, String>accountData = new HashMap<>();
+        accountData.put("studentId", account.getStudentId());
+        HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(accountData, headers);
+        String URL = "http://localhost:8081/accounts/";
+        restTemplate.postForObject(URL, requestEntity, Account.class);
 
+    }
 
     public Account findAccountByUsername(String user){
         return repo.findAccountByUsername(user);
     }
 
 
-    public void updateAccount(@PathVariable Long id, @RequestBody Account account){
+    public void updateAccount(@PathVariable Long id, Account account){
         Account updatedAccount = repo.findAccountById(id);
         if(updatedAccount == null){
             throw new RuntimeException("Account: '" + account.getUsername() + "' Does not Exist");
@@ -53,6 +67,8 @@ public class accountService {
         repo.save(updatedAccount);
         return ResponseEntity.ok(updatedAccount);
     }
+
+
 
     private String createNewStudentID() {
         Random r = new Random();

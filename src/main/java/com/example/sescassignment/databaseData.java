@@ -33,14 +33,14 @@ public class databaseData {
             Account mister = new Account();
             mister.setUsername("Mister");
             mister.setPassword("test");
-            mister.setStudentID("c3538468");
+            mister.setStudentId("c3538468");
             mister.enrollInCourse(SESC);
             mister.enrollInCourse(CloudComputing);
 
             Account richards = new Account();
             richards.setUsername("richards");
             richards.setPassword("test2");
-            richards.setStudentID("c3231361");
+            richards.setStudentId("c3231361");
             richards.enrollInCourse(CloudComputing);
             richards.enrollInCourse(Dissertation);
 

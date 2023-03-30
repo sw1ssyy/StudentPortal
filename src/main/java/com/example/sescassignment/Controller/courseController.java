@@ -5,6 +5,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -17,10 +18,18 @@ public class courseController {
     }
 
     @GetMapping(value = "/courses")
-    public String viewCourses(Model model,@Param("keyword")String keyword){
+    public ModelAndView viewCourses(@Param("keyword")String keyword){
         List<Course> courseList = service.SearchCoursebyName(keyword);
-        model.addAttribute("courseList", courseList);
-        model.addAttribute("keyword", keyword);
-        return "Courses";
+        ModelAndView modelAndView = new ModelAndView("Courses");
+        modelAndView.addObject("courseList", courseList);
+        modelAndView.addObject("keyword", keyword);
+        return modelAndView;
+    }
+    @GetMapping(value = "/courses/{id}")
+    public ModelAndView viewSingleCourse(@PathVariable Long id){
+        Course selectedCourse = service.findCourseByID(id);
+        ModelAndView modelAndView = new ModelAndView("CourseDetail");
+        modelAndView.addObject("course", selectedCourse);
+        return modelAndView;
     }
 }

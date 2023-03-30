@@ -20,7 +20,7 @@
           <p  th:text="'Password: ' + ${account.password}"></p>
         </div>
         <div class="form-group">
-          <p th:text="'Student ID: ' + ${account.studentID}"></p>
+          <p th:text="'Student ID: ' + ${account.getStudentId}"></p>
         </div>
         <a th:href="@{/login}">
         <button type="button" class="btn btn-primary m-2">Login</button>

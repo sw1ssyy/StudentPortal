@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CourseRepo extends JpaRepository<Course, Long> {
     List<Course> findCourseByTitle(String courseTitle);
+    Course findCourseById(Long ID);
 }

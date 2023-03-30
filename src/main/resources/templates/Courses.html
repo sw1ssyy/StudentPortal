@@ -31,7 +31,11 @@
     <td th:text="${course.title}"></td>
     <td th:text="${course.description}"></td>
     <td th:text="${course.fee}"></td>
-    <td><button type="submit" class="btn btn-primary btn-sm" th:onclick="do ">Enroll</button></td>
+    <td>
+        <a th:href="@{/courses/{id}(id=${course.id})}">
+        <button type="submit" class="btn btn-primary btn-sm">View</button>
+        </a>
+    </td>
 </tr>
 </table>
 </div>

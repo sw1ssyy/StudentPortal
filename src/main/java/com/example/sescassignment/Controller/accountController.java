@@ -1,63 +1,66 @@
 package com.example.sescassignment.Controller;
 import com.example.sescassignment.Model.Account;
 import com.example.sescassignment.Service.accountService;
-import com.example.sescassignment.Service.intergrationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
 public class accountController {
     private final accountService service;
-    private final intergrationService service2;
 
     private String currentUser = "";
-    public accountController(accountService service, intergrationService service2) {
+    public accountController(accountService service) {
         this.service = service;
 
 
-        this.service2 = service2;
     }
     @GetMapping(value = "/login")
-    public String accountLogin(Model model){
-        model.addAttribute("account",new Account());
-        return "login";
+    public ModelAndView accountLogin(){
+        ModelAndView modelAndView = new ModelAndView("login");
+        modelAndView.addObject("account", new Account());
+
+        return modelAndView;
     }
     @PostMapping(value = "/login")
-    public String checkLogin(Account account ,Model model) {
+    public ModelAndView checkLogin(Account account) {
         if(service.checkAccountExists(account.getUsername(), account.getPassword())){
             System.out.println("Account: '" + account.getUsername() + "' Login Success!");
             currentUser = account.getUsername();
-            return getHomePage(model);
+            return getHomePage();
         }
         else
             System.out.println("Account: '" + account.getUsername() + "' Login Failed!");
-        return "login-failed";
+        return new ModelAndView("login-failed");
     }
     @GetMapping(value = "/signup")
-    public String accountRegister(Model model){
-        model.addAttribute("account", new Account());
-        return "signup";
+    public ModelAndView accountRegister() {
+        ModelAndView modelAndView = new ModelAndView("signup");
+        modelAndView.addObject("account", new Account());
+        return modelAndView;
     }
-    @PostMapping("/signup")
-    public String accountRegisterSuccess( Account account, Model model) {
+        @PostMapping(value = "/signup")
+    public ModelAndView accountRegisterSuccess(  Account account) {
         //If the account exists
         if(service.checkAccountExists(account.getUsername(), account.getPassword())){
             System.out.println("Error: Account Already Exists");
-            return "signup-failed";
+            return new ModelAndView("signup-failed");
         }
         //If account does not exist
             service.createNewAccount(account);
-            service2.createFinanceAccount(account);
-            model.addAttribute("account", account);
-            return "signup-success";
+            service.createFinanceAccount(account);
+            ModelAndView modelAndView = new ModelAndView("signup-success");
+            modelAndView.addObject("account", account);
+            return modelAndView;
     }
     @GetMapping(value = "/home")
-    public String getHomePage(Model model){
+    public ModelAndView getHomePage(){
        Account savedaccount = service.findAccountByUsername(currentUser);
-        model.addAttribute("user",savedaccount);
-        return "home";
+       ModelAndView modelAndView = new ModelAndView("home");
+        modelAndView.addObject("user",savedaccount);
+        return modelAndView;
     }
     @GetMapping(value = "home/edit/{id}")
     public String getEditProfilePage(@PathVariable Long id, Model model ){
@@ -66,10 +69,10 @@ public class accountController {
         return "edit-profile";
     }
     @PostMapping(value = "home/edit/{id}")
-    public String putEditProfile(Model model, @PathVariable Long id,  Account account ){
+    public ModelAndView putEditProfile(@PathVariable Long id,  Account account ){
          service.updateAccount(id, account);
         currentUser = account.getUsername();
-         return getHomePage(model);
+         return getHomePage();
     }
 
     @GetMapping(value = "/enrollment")

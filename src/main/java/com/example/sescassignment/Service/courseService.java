@@ -23,4 +23,7 @@ public class courseService {
         }
         return repo.findCourseByTitle(title);
     }
+    public Course findCourseByID(Long id){
+        return repo.findCourseById(id);
+    }
 }
