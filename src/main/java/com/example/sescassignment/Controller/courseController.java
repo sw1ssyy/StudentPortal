@@ -18,9 +18,7 @@ public class courseController {
     private final courseService service;
     private final accountController controller;
     private final accountService accservice;
-
     private final enrollmentService enrollService;
-
 
     public courseController(courseService service, accountController controller, accountService accservice, enrollmentService enrollService) {
         this.service = service;
@@ -56,6 +54,8 @@ public class courseController {
         modelAndView.addObject("user", account);
         return modelAndView;
     }
+
+
 
     public Account findAccount(){
         String currentAccount = controller.currentUser;

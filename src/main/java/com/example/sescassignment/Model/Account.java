@@ -33,7 +33,6 @@ public class Account {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     Set<Course> coursesEnrolledIn;
-
     public void enrollInCourse(Course course){
         if(coursesEnrolledIn == null){
             coursesEnrolledIn = new HashSet<>();

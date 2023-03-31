@@ -19,6 +19,7 @@ public class databaseData {
             SESC.setDescription("Software Engineering for Service Computing");
             SESC.setFee(10.00);
 
+
             Course Dissertation = new Course();
             Dissertation.setTitle("Dissertation");
             Dissertation.setDescription("Final Year Module for Master Students");
@@ -34,17 +35,16 @@ public class databaseData {
             mister.setUsername("Mister");
             mister.setPassword("test");
             mister.setStudentId("c3538468");
-            mister.enrollInCourse(SESC);
-            mister.enrollInCourse(CloudComputing);
+            mister.setHasOutstandingBalance(false);
 
             Account richards = new Account();
             richards.setUsername("richards");
             richards.setPassword("test2");
             richards.setStudentId("c3231361");
-            richards.enrollInCourse(CloudComputing);
-            richards.enrollInCourse(Dissertation);
+            richards.setHasOutstandingBalance(false);
 
             accountRepo.saveAllAndFlush(Set.of(mister,richards));
+            courseRepo.saveAllAndFlush(Set.of(SESC,CloudComputing,Dissertation));
         };
     }
 

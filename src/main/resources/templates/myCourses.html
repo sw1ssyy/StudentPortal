@@ -9,26 +9,21 @@
 </head>
 <body>
 <div th:insert="~{fragments/navbar :: header}"></div>
+<h2 class="text-center p-2 m-3" >My Courses</h2>
 <div class="container">
-    </form>
     <table class="table table-striped">
         <tr>
             <th>Course ID</th>
             <th>Course Title</th>
             <th>Course Description</th>
             <th>Course Fee</th>
-            <th>Action</th>
+
         </tr>
         <tr  th:each="course : ${courseList}">
             <td th:text="${course.id}"></td>
             <td th:text="${course.title}"></td>
             <td th:text="${course.description}"></td>
             <td th:text="${course.fee}"></td>
-            <td>
-                <a th:href="@{/courses/{id}(id=${course.id})}">
-                    <button type="submit" class="btn btn-primary btn-sm">Pay</button>
-                </a>
-            </td>
         </tr>
     </table>
 </div>

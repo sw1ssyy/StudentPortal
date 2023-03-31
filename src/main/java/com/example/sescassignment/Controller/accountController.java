@@ -1,5 +1,6 @@
 package com.example.sescassignment.Controller;
 import com.example.sescassignment.Model.Account;
+import com.example.sescassignment.Model.Course;
 import com.example.sescassignment.Service.accountService;
 import com.example.sescassignment.Service.enrollmentService;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.Set;
 
 
 @Controller
@@ -80,7 +84,7 @@ public class accountController {
     }
 
     @GetMapping(value = "/graduation")
-    public ModelAndView viewMyCourses(){
+    public ModelAndView viewGraduation(){
         Account account = service.findAccountByUsername(currentUser);
         Boolean GradStatus = enrollService.canGraduate(account);
         ModelAndView modelAndView = new ModelAndView("Graduation");
@@ -88,6 +92,16 @@ public class accountController {
         return modelAndView;
     }
 
+
+    @GetMapping(value = "/enrollment")
+    public ModelAndView viewAllEnrollments() {
+        Account user = service.findAccountByUsername(currentUser);
+       Set<Course> coursesSet = user.getCoursesEnrolledIn();
+        List<Course> courseList = coursesSet.stream().toList();
+        ModelAndView modelAndView = new ModelAndView("myCourses");
+        modelAndView.addObject("courseList", courseList);
+        return modelAndView;
+    }
 
 
 

@@ -2,6 +2,7 @@ package com.example.sescassignment.Service;
 
 import com.example.sescassignment.Model.Course;
 import com.example.sescassignment.Model.CourseRepo;
+import com.example.sescassignment.Model.Invoice;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,5 +26,9 @@ public class courseService {
     }
     public Course findCourseByID(Long id){
         return repo.findCourseById(id);
+    }
+
+    public void processInvoice(Invoice invoice){
+
     }
 }

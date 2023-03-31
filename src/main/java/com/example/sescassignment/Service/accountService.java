@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -42,11 +43,10 @@ public class accountService {
     public void createLibraryAccount(Account account){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBasicAuth(HttpHeaders.ACCEPT);
-        Map<String, String>accountData = new HashMap<>();
+        HashMap<String,String> accountData = new HashMap<>();
         accountData.put("studentId", account.getStudentId());
+        HttpEntity<Map<String,String>> requestEntity = new HttpEntity<>(accountData, headers);
         String URL = "http://localhost:80/api/register";
-        HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(accountData,headers);
         restTemplate.postForObject(URL, requestEntity,Account.class);
 
     }
@@ -77,9 +77,7 @@ public class accountService {
         return ResponseEntity.ok(updatedAccount);
     }
 
-    public ResponseEntity<Account> GetStudentIDJSON(Account account){
-        return new ResponseEntity<>(account, HttpStatus.OK);
-    }
+
 
     private String createNewStudentID() {
         Random r = new Random();
