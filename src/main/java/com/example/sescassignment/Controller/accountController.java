@@ -1,6 +1,9 @@
 package com.example.sescassignment.Controller;
 import com.example.sescassignment.Model.Account;
 import com.example.sescassignment.Service.accountService;
+import com.example.sescassignment.Service.enrollmentService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +13,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class accountController {
     private final accountService service;
+    private final enrollmentService enrollService;
 
-    private String currentUser = "";
-    public accountController(accountService service) {
+    public String currentUser = "";
+    public accountController(accountService service, enrollmentService enrollService) {
         this.service = service;
-
-
+        this.enrollService = enrollService;
     }
     @GetMapping(value = "/login")
     public ModelAndView accountLogin(){
@@ -51,6 +54,7 @@ public class accountController {
         //If account does not exist
             service.createNewAccount(account);
             service.createFinanceAccount(account);
+            service.createLibraryAccount(account);
             ModelAndView modelAndView = new ModelAndView("signup-success");
             modelAndView.addObject("account", account);
             return modelAndView;
@@ -75,9 +79,16 @@ public class accountController {
          return getHomePage();
     }
 
-    @GetMapping(value = "/enrollment")
-    public String getEnrollmentPage(){
-        return "enrollment";
+    @GetMapping(value = "/graduation")
+    public ModelAndView viewMyCourses(){
+        Account account = service.findAccountByUsername(currentUser);
+        Boolean GradStatus = enrollService.canGraduate(account);
+        ModelAndView modelAndView = new ModelAndView("Graduation");
+        modelAndView.addObject("status", GradStatus);
+        return modelAndView;
     }
+
+
+
 
 }

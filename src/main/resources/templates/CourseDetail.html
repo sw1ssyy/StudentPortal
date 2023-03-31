@@ -11,11 +11,11 @@
 <div th:insert="~{fragments/navbar :: header}"></div>
 <div class="container">
   <div class="display-4" id="welcome-message" th:object="${course}">
-    <p  class="text-center mt-4" th:text="${course.title}"></p>
+    <p  class="text-lg-center mt-4" th:text="${course.title}"></p>
   </div>
   <div class="student-profile">
     <div class="content">
-      <h3 class="text-sm-center">Course Details</h3>
+      <h3 class="text-md-center">Course Details</h3>
       <hr />
       <form action="#" th:action="@{/courses/{id} (id=${course.id})}" method="get" th:object="${course}">
         <div class="form-group">
@@ -28,10 +28,10 @@
           <p  th:text="'Description : ' + ${course.description}"></p>
         </div>
         <div class="form-group">
-          <p  th:text="'Fee : ' + ${course.fee}"></p>
+          <p  th:text="'Fee : £' + ${course.fee}"></p>
         </div>
         <hr />
-        <a  >
+        <a th:href="@{/courses/{id}/enroll (id=${course.id})}" >
           <button type="button" class="btn btn-primary">Enroll</button>
         </a>
         <a th:href="@{/courses}">

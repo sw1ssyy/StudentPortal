@@ -2,10 +2,7 @@ package com.example.sescassignment.Service;
 
 import com.example.sescassignment.Model.Account;
 import com.example.sescassignment.Model.AccountRepo;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
@@ -42,6 +39,18 @@ public class accountService {
 
     }
 
+    public void createLibraryAccount(Account account){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBasicAuth(HttpHeaders.ACCEPT);
+        Map<String, String>accountData = new HashMap<>();
+        accountData.put("studentId", account.getStudentId());
+        String URL = "http://localhost:80/api/register";
+        HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(accountData,headers);
+        restTemplate.postForObject(URL, requestEntity,Account.class);
+
+    }
+
     public Account findAccountByUsername(String user){
         return repo.findAccountByUsername(user);
     }
@@ -68,7 +77,9 @@ public class accountService {
         return ResponseEntity.ok(updatedAccount);
     }
 
-
+    public ResponseEntity<Account> GetStudentIDJSON(Account account){
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
 
     private String createNewStudentID() {
         Random r = new Random();

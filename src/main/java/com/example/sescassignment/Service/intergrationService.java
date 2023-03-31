@@ -14,12 +14,13 @@ public class intergrationService {
     }
 
     public Account getStudentAccount(String studentID){
-        return template.getForObject("http://localhost:8081/accounts/student" + studentID, Account.class);
+        return template.getForObject("http://localhost:8081/accounts/student/" + studentID, Account.class);
     }
 
     public Invoice createCourseFeeInvoice(Invoice invoice){
-        return template.postForObject("http:/localhost:8081/invoices/", invoice , Invoice.class);
+        return template.postForObject("http://localhost:8081/invoices/", invoice , Invoice.class);
     }
+
 
 
 
