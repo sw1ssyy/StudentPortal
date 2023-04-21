@@ -30,6 +30,25 @@ public class databaseData {
             CloudComputing.setDescription("Cloud Services Development");
             CloudComputing.setFee(20.00);
 
+            Course Robotics = new Course();
+            Robotics.setTitle("Robotics");
+            Robotics.setDescription("Learn how to make Robots!!!!");
+            Robotics.setFee(50.00);
+
+            Course DataAnalytics = new Course();
+            DataAnalytics.setTitle(" Applied Data Analytics");
+            DataAnalytics.setDescription(" Learn Data Science with Python and R ");
+            DataAnalytics.setFee(40.00);
+
+            Course MobileApplications = new Course();
+            MobileApplications.setTitle("Developing Mobile Applications");
+            MobileApplications.setDescription("Make Mobile Apps with Android Studio");
+            MobileApplications.setFee(35.00);
+
+            Course NetworkManagement = new Course();
+            NetworkManagement.setTitle("Network Management");
+            NetworkManagement.setDescription("Learning about Managing Existing Networks");
+            NetworkManagement.setFee(35.00);
 
             Account mister = new Account();
             mister.setUsername("Mister");
@@ -44,7 +63,7 @@ public class databaseData {
             richards.setHasOutstandingBalance(false);
 
             accountRepo.saveAllAndFlush(Set.of(mister,richards));
-            courseRepo.saveAllAndFlush(Set.of(SESC,CloudComputing,Dissertation));
+            courseRepo.saveAllAndFlush(Set.of(SESC,CloudComputing,Dissertation,NetworkManagement, Robotics,MobileApplications, DataAnalytics));
         };
     }
 

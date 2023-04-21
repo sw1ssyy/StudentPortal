@@ -35,7 +35,7 @@ public class accountService {
         Map<String, String>accountData = new HashMap<>();
         accountData.put("studentId", account.getStudentId());
         HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(accountData, headers);
-        String URL = "http://localhost:8081/accounts/";
+        String URL = "http://127.0.0.1:8000/api/accounts/create";
         restTemplate.postForObject(URL, requestEntity, Account.class);
 
     }

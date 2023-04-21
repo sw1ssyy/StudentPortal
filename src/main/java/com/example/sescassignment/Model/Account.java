@@ -1,6 +1,7 @@
 package com.example.sescassignment.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +18,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
+    @JsonProperty("studentId")
     private String studentId;
     private Boolean hasOutstandingBalance;
     private String username;
@@ -33,6 +35,11 @@ public class Account {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     Set<Course> coursesEnrolledIn;
+
+    public Account() {
+
+    }
+
     public void enrollInCourse(Course course){
         if(coursesEnrolledIn == null){
             coursesEnrolledIn = new HashSet<>();
@@ -40,6 +47,8 @@ public class Account {
         coursesEnrolledIn.add(course);
     }
 
-
+    public Account(String studentId) {
+        this.studentId = studentId;
+    }
 
 }
