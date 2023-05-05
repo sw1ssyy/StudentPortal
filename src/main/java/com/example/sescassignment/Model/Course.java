@@ -3,6 +3,7 @@ package com.example.sescassignment.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NonNull;
 import lombok.ToString;
 
 import java.util.Set;
@@ -21,4 +22,9 @@ public class Course {
     @JsonIgnore
     @ToString.Exclude
     Set<Account> studentsEnrolledInCourses;
+
+
+    public Course() {
+
+    }
 }

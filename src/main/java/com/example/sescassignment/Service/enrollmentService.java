@@ -16,11 +16,23 @@ public class enrollmentService {
 
     private final accountService accService;
 
+    /**
+     * Example of Dependency Injection
+     * @param repo - Instance of Account Repository created by Spring Boot Framework
+     * @param service - Instance of the integration service created by Spring Boot Framework
+     * @param accService - Instance of the account service created by Spring Boot Framework
+     */
     public enrollmentService(AccountRepo repo, intergrationService service, accountService accService) {
         this.repo = repo;
         this.service = service;
         this.accService = accService;
     }
+
+    /**
+     * Method used to enroll an account onto a course
+     * @param account - account enrolling
+     * @param course - course being enrolled into
+     */
     public void enrollStudentInCourse(Account account, Course course){
         account.enrollInCourse(course);
         repo.save(account);
@@ -28,6 +40,12 @@ public class enrollmentService {
     }
 
 
+    /**
+     * Method used to create an invoice after an account has enrolled
+     * @param account - account getting the invoice
+     * @param course - account being enrolled into
+     * @return the integration service creating the invoice that will be sent to the finance portal
+     */
 
     public Invoice CreateEnrollmentInvoice(Account account, Course course){
         Invoice i = new Invoice();
@@ -39,6 +57,11 @@ public class enrollmentService {
         return service.createCourseFeeInvoice(i);
     }
 
+    /**
+     * Boolean Status to check if an account has any existing payments on the finance portal and therefore can graduate or not
+     * @param account - account being queried
+     * @return result of the search via boolean value
+     */
     public Boolean canGraduate(Account account){
         Account selectedAccount = accService.findAccountByUsername(account.getUsername());
         Account FinanceAccount = service.getStudentAccount(selectedAccount.getStudentId());

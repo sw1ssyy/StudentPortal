@@ -9,11 +9,11 @@
 <body>
 <div th:insert="~{fragments/navbar :: header}"></div>
 <main>
-
     <div class="back">
         <div class="div-center">
             <div class="content">
                 <h3>Edit Profile</h3>
+
                 <hr />
                 <form th:object="${user}"  method="POST" th:action="@{/home/edit/{id}(id=${user.id})}">
                     <div class="form-group">
@@ -31,7 +31,6 @@
                         <button type="button" class="btn btn-primary">Back</button>
                     </a>
                 </form>
-
             </div>
 
         </div>

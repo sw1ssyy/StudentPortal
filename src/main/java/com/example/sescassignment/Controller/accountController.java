@@ -3,8 +3,6 @@ import com.example.sescassignment.Model.Account;
 import com.example.sescassignment.Model.Course;
 import com.example.sescassignment.Service.accountService;
 import com.example.sescassignment.Service.enrollmentService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +32,7 @@ public class accountController {
     @PostMapping(value = "/login")
     public ModelAndView checkLogin(Account account) {
         if(service.checkAccountExists(account.getUsername(), account.getPassword())){
-            System.out.println("Account: '" + account.getUsername() + "' Login Success!");
+                System.out.println("Account: '" + account.getUsername() + "' Login Success!");
             currentUser = account.getUsername();
             return getHomePage();
         }
@@ -96,6 +94,9 @@ public class accountController {
     @GetMapping(value = "/enrollment")
     public ModelAndView viewAllEnrollments() {
         Account user = service.findAccountByUsername(currentUser);
+        if(user.getCoursesEnrolledIn().size() == 0){
+            return new ModelAndView("enrollment");
+        }
        Set<Course> coursesSet = user.getCoursesEnrolledIn();
         List<Course> courseList = coursesSet.stream().toList();
         ModelAndView modelAndView = new ModelAndView("myCourses");

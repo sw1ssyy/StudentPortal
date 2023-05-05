@@ -1,17 +1,20 @@
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.0.4'
-    id 'io.spring.dependency-management' version '1.1.0'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'groovy'
+    id 'idea'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '19'
+sourceCompatibility = '17'
 
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+
 }
 
 repositories {
@@ -28,8 +31,14 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.gebish:geb-spock:5.1'
+    testImplementation 'org.seleniumhq.selenium:selenium-firefox-driver:3.141.59'
+    testImplementation 'org.seleniumhq.selenium:selenium-support:3.141.59'
+
+
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
